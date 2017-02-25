@@ -13,7 +13,7 @@ public class MiOvalo extends MiFiguraDelimitada{
     }
     @Override
     public void dibujar(Graphics g) {
-        
+        g.setColor(getColor());
         ancho = Math.abs(super.getCoorX1()-super.getCoorX());
         alto = Math.abs(super.getCoorY1()-super.getCoorY());
         if(!isRelleno())

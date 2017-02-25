@@ -14,6 +14,7 @@ public class MiRectangulo extends MiFiguraDelimitada{
     
     @Override
     public void dibujar(Graphics g) {
+        g.setColor(getColor());
         int ancho, alto;
         ancho = Math.abs(super.getCoorX1()-super.getCoorX());
         alto = Math.abs(super.getCoorY1()-super.getCoorY());
