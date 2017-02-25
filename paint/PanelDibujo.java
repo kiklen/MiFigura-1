@@ -64,14 +64,23 @@ public class PanelDibujo extends JPanel{
     }
     
     public void borrarUltima(){
-        if(cuentaFiguras >0){
-            cuentaFiguras --;
-        figuraActual= null;
-        }
+        if(--cuentaFiguras <0)
+            cuentaFiguras =0;
+        
+        figuras[cuentaFiguras]= null;
+//        figuraActual= null;
+        
         repaint();
     }
     public void borrarTodo(){
         cuentaFiguras = 0;
+        
+        figuraActual = null;
+		
+		for (short j = 0; figuras[j] != null && j < figuras.length; ++j)
+			figuras[j] = null;
+		
+		repaint ();
     }
     
     private class Raton extends MouseAdapter implements MouseMotionListener{
@@ -86,7 +95,6 @@ public class PanelDibujo extends JPanel{
             }else if(tipoFigura == 2){
                 figuraActual = new MiRectangulo();
                 figuraActual.setColor(colorActual);
-                
                 figuraActual.setCoorX(m.getX());
                 figuraActual.setCoorY(m.getY());
             }else{
@@ -95,9 +103,7 @@ public class PanelDibujo extends JPanel{
                 figuraActual.setCoorX(m.getX());
                 figuraActual.setCoorY(m.getY());
             }
-            figuraActual.setCoorX(m.getX());
-            figuraActual.setCoorY(m.getY());
-            figuraActual.setColor(colorActual);
+            
             
         }
         @Override
@@ -106,7 +112,7 @@ public class PanelDibujo extends JPanel{
             figuraActual.setCoorY1(m.getY());
             figuras[cuentaFiguras] = figuraActual;
             cuentaFiguras++;
-            figuraActual = null;
+//            figuraActual = null;
             repaint();
         }
         @Override
@@ -117,6 +123,21 @@ public class PanelDibujo extends JPanel{
         public void mouseDragged(MouseEvent m){
             figuraActual.setCoorX1(m.getX());
             figuraActual.setCoorY1(m.getY());
+            switch(tipoFigura){
+                case 1:  figuraActual= new Milinea(figuraActual.getCoorX(),
+                         figuraActual.getCoorY(),figuraActual.getCoorX1(),
+                         figuraActual.getCoorY1(),colorActual);
+                         break;
+                case 2:  figuraActual= new MiRectangulo(figuraActual.getCoorX(),
+                         figuraActual.getCoorY(),figuraActual.getCoorX1(),
+                         figuraActual.getCoorY1(),colorActual,figuraRellena);
+                    break;
+                case 3:  figuraActual= new MiOvalo(figuraActual.getCoorX(),
+                         figuraActual.getCoorY(),figuraActual.getCoorX1(),
+                         figuraActual.getCoorY1(),colorActual,figuraRellena);
+                break;
+            }
+            
             etiquetaEstado.setText(""+m.getX()+", "+m.getY());
             repaint();
         }

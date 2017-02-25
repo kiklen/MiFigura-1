@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JButton;
@@ -16,7 +18,7 @@ import javax.swing.JComboBox;
 public class MarcoDibujo extends JFrame{
 private final PanelDibujo paned;
 private final JButton borrar;
-private final JButton desacer;
+private final JButton deshacer;
 
  private static final String colors[] = {"Azul","Rojo","Verde", "rosa" };
  private static final String figurs[]  = {"linea ","rectangulo", " circulo" };
@@ -34,18 +36,20 @@ public MarcoDibujo(){
     JPanel abajo = new JPanel ();
     
     borrar = new JButton("borrar");
-    desacer = new JButton("desacer");
+    deshacer = new JButton("deshacer");
     colores = new JComboBox(colors);
     figuras = new JComboBox(figurs);
     relleno = new JCheckBox();
     
     Acciones accion = new Acciones();
-    colores.addActionListener(accion);
+    colores.addItemListener(accion);
     figuras.addActionListener(accion);
     relleno.addActionListener(accion);
+    deshacer.addActionListener(accion);
+    borrar.addActionListener(accion);
     
     arriba.add(borrar);
-    arriba.add(desacer);
+    arriba.add(deshacer);
     arriba.add(colores);
     arriba.add(figuras);
     arriba.add(relleno);
@@ -54,26 +58,37 @@ public MarcoDibujo(){
     add(principal, BorderLayout.NORTH);
     add(paned);
 }
-    public class Acciones implements ActionListener{
+    public class Acciones implements ActionListener, ItemListener{
         @Override
 
         public void actionPerformed(ActionEvent e) {
-            if(e.getSource()== colores){
+            
+            if(e.getSource()== figuras){
+                paned.setTipoFigura(figuras.getSelectedIndex()+1);
+            }else if(relleno.isSelected()){
+                paned.setFiguraRellena(true);
+            }
+            else if(e.getSource()== deshacer){
+                paned.borrarUltima();
+            }else if(e.getSource()== borrar){
+                paned.borrarTodo();
+            }
+        }
+
+        @Override
+        public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange()== ItemEvent.ITEM_STATE_CHANGED)
                 switch (colores.getSelectedIndex()){
                     case 0: paned.setColorActual(Color.BLUE);
                         break;
                     case 1: paned.setColorActual(Color.RED);
                         break;
+                    case 2: paned.setColorActual(Color.green);
                 }
-            }
-            else if(e.getSource()== figuras){
-                paned.setTipoFigura(figuras.getSelectedIndex()+1);
-            }else if(relleno.isSelected()){
-                paned.setFiguraRellena(true);
             }
         }
         
-    }
+    
    
     
     public static void main(String[] args) {
