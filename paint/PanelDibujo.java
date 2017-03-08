@@ -97,8 +97,13 @@ public class PanelDibujo extends JPanel{
                 figuraActual.setColor(colorActual);
                 figuraActual.setCoorX(m.getX());
                 figuraActual.setCoorY(m.getY());
-            }else{
+            }else if(tipoFigura==3){
                 figuraActual = new MiOvalo();
+                figuraActual.setColor(colorActual);
+                figuraActual.setCoorX(m.getX());
+                figuraActual.setCoorY(m.getY());
+            }else{
+                figuraActual = new MiTriangulo();
                 figuraActual.setColor(colorActual);
                 figuraActual.setCoorX(m.getX());
                 figuraActual.setCoorY(m.getY());
@@ -136,6 +141,9 @@ public class PanelDibujo extends JPanel{
                          figuraActual.getCoorY(),figuraActual.getCoorX1(),
                          figuraActual.getCoorY1(),colorActual,figuraRellena);
                 break;
+                case 4: figuraActual= new MiTriangulo(figuraActual.getCoorX(),
+                        figuraActual.getCoorY(),figuraActual.getCoorX1(),
+                        figuraActual.getCoorY1(),colorActual,figuraRellena);
             }
             
             etiquetaEstado.setText(""+m.getX()+", "+m.getY());

@@ -13,21 +13,24 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JInternalFrame;
 
 
-public class MarcoDibujo extends JFrame{
+public class MarcoDibujo extends JInternalFrame{
     
     private final PanelDibujo paned;
     private final JButton borrar;
     private final JButton deshacer;
 
      private static final String colors[] = {"Azul","Rojo","Verde", "Rosa" };
-     private static final String figurs[]  = {"linea ","rectangulo", " circulo" };
+     private static final String figurs[]  = {"linea ","rectangulo", " circulo", "triangulo"};
 
     private JComboBox colores, figuras;
     private JCheckBox relleno;
     private Color color;
-    public MarcoDibujo(){
+    public MarcoDibujo(String nombre, boolean b, boolean c, 
+            boolean d, boolean e){
+        super(nombre,b,c,d,e);
         //setLayout(new FlowLayout());
         paned = new PanelDibujo();
 
@@ -123,14 +126,7 @@ public class MarcoDibujo extends JFrame{
 
 
 
-    public static void main(String[] args) {
-            MarcoDibujo dib= new  MarcoDibujo();
-            dib.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            dib.setSize(800, 800);
-            dib.setVisible(true);
-
-
-    }
+    
 
 
 
